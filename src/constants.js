@@ -5,3 +5,6 @@ export const REMOVE_CITY = 'REMOVE_CITY';
 export const CURRENT_CITY_START = 'CURRENT_CITY_START';
 export const CURRENT_CITY_OK = 'CURRENT_CITY_OK';
 export const CURRENT_CITY_ERROR = 'CURRENT_CITY_ERROR';
+export const CITY_START = 'CITY_START';
+export const CITY_OK = 'CITY_OK';
+export const CITY_ERROR = 'CITY_ERROR';

@@ -11,8 +11,11 @@ class City extends Component {
         open: false
     }
 
-    toggleCity = (e) => {
-        this.setState({open: !this.state.open });
+    getCityWeather = (e) => {
+        if (!this.props.current) {
+            this.props.getCityWeather(this.props.city.lat, this.props.city.lng, this.props.city.id);
+            this.setState({open: !this.state.open });
+        }
     }
 
     handleRemoveClick = (e) => {
@@ -22,10 +25,10 @@ class City extends Component {
     render() {
         return (
             <div className='city-item'>
-                <div className='city-name' onClick={this.toggleCity}>{this.props.city.name}
-                    <span className='city-remove' onClick={this.handleRemoveClick}>×</span>
+                <div className='city-name' onClick={this.getCityWeather}>{this.props.city.name}
+                    {this.props.current ? null : <span className='city-remove' onClick={this.handleRemoveClick}>×</span>}
                 </div>
-                {this.props.city.weather && (this.props.current || this.state.open)
+                {this.props.city.showWeather && (this.props.current || this.state.open)
                     ? <Weather weather ={this.props.city.weather} />
                     : null
                 }

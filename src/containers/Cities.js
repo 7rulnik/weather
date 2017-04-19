@@ -31,7 +31,7 @@ class Cities extends Component {
                 {this.props.cities.currentCity
                     ? <div>
                         <h3>Ваш город {this.props.cities.currentCity.name}</h3>
-                        <City city={this.props.cities.currentCity} current={true}/>
+                        <City city={this.props.cities.currentCity} current={true} showWeather={true}/>
                     </div>
                     : null}
                 <input
@@ -42,7 +42,11 @@ class Cities extends Component {
                     placeholder='Выберите город'/>
                 {this.props.cities.citiesList && this.props.cities.citiesList.length
                     ? this.props.cities.citiesList.map((city, i) => {
-                        return <City city={city} key={i} removeCity ={this.handleRemoveClick} />;
+                        return <City
+                            key={i}
+                            city={city}
+                            getCityWeather = {this.props.getCityWeather}
+                            removeCity = {this.handleRemoveClick} />;
                 }) : null}
             </div>
         );

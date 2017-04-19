@@ -1,5 +1,5 @@
 export const API_URL = 'http://api.openweathermap.org/data/2.5/weather';
-export const SELECT_CITY = 'SELECT_CITY';
+export const API_KEY = 'e539b3dcdce62f43d0c9eac4ff2b6ab4';
 export const ADD_CITY = 'ADD_CITY';
 export const REMOVE_CITY = 'REMOVE_CITY';
 export const CURRENT_CITY_START = 'CURRENT_CITY_START';

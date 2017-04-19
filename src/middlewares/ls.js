@@ -1,17 +1,6 @@
-import { SELECT_CITY, ADD_CITY, REMOVE_CITY } from '../constants';
+import { ADD_CITY, REMOVE_CITY } from '../constants';
 
 export default store => next => action => {
-    if (action.type === SELECT_CITY) {
-        const { ...rest} = action;
-
-        const cities = JSON.parse(localStorage.getItem('cities'));
-
-        return next({
-            ...rest,
-            cities
-        });
-    }
-
     if (action.type === REMOVE_CITY) {
         const {payload: {id}} = action;
         const { ...rest} = action;

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 function Weather(props) {
     const { main, description } = props.weather[0];
@@ -10,11 +10,4 @@ function Weather(props) {
     );
 }
 
-// Comment.propTypes = {
-//     comment: PropTypes.shape({
-//         text: PropTypes.string.isRequired,
-//         user: PropTypes.string
-//     })
-// }
-
-export default Weather
+export default Weather;

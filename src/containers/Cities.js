@@ -1,13 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import City from './../components/City';
+import Loader from './../components/Loader';
 import { addCity, removeCity, getCityWeather } from '../AC/cities';
 
 class Cities extends Component {
-    static propTypes = {
-
-    };
-
     state = {
         text: '',
         currentCityLoaded: false
@@ -30,10 +27,11 @@ class Cities extends Component {
             <div>
                 {this.props.cities.currentCity
                     ? <div>
-                        <h3>Ваш город {this.props.cities.currentCity.name}</h3>
-                        <City city={this.props.cities.currentCity} current={true} showWeather={true}/>
+                        <h3>Ваш город</h3>
+                        <City city={this.props.cities.currentCity} current={true}/>
                     </div>
-                    : null}
+                    : <Loader />
+                }
                 <input
                     id='txtPlaces'
                     value={this.state.text}
@@ -66,18 +64,17 @@ class Cities extends Component {
             google.maps.event.addListener(places, 'place_changed', function() {
                 var place = places.getPlace();
                 var address = place.formatted_address;
-                var latitude = place.geometry.location.lat();
-                var longitude = place.geometry.location.lng();
+                var lat = place.geometry.location.lat();
+                var lng = place.geometry.location.lng();
 
-                self.handleAddClick(address, latitude, longitude);
+                self.handleAddClick(address, lat, lng);
 
-                // self.props.getCityWeather(latitude, longitude);
                 self.setState({text: ''});
             });
         }
 
-        function error() {
-            console.log('error');
+        function error(err) {
+            console.log(err);
         }
 
         if (navigator.geolocation && !this.state.currentCityLoaded) {

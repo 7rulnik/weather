@@ -3,7 +3,6 @@ import { API_URL, API_KEY, ADD_CITY, REMOVE_CITY, CURRENT_CITY_START, CURRENT_CI
         CITY_START, CITY_OK, CITY_ERROR} from '../constants';
 
 export function getCityWeather(lat, lng, id) {
-    console.log(id);
     let START = CURRENT_CITY_START;
     let OK = CURRENT_CITY_OK;
     let ERROR = CURRENT_CITY_ERROR;
@@ -17,7 +16,7 @@ export function getCityWeather(lat, lng, id) {
             type: START
         })
 
-        axios.get(`${API_URL}?lat=${lat}&lon=${lng}&appid=e539b3dcdce62f43d0c9eac4ff2b6ab4`)
+        axios.get(`${API_URL}?lat=${lat}&lon=${lng}&appid=${API_KEY}`)
         .then(function(response) {
             const { name, weather } = response.data;
             dispatch({
@@ -32,7 +31,6 @@ export function getCityWeather(lat, lng, id) {
             });
         })
         .catch(function(error) {
-            console.log(error)
             dispatch({
                 type: ERROR
             });

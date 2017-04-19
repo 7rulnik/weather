@@ -1,52 +1,62 @@
 import { ADD_CITY, REMOVE_CITY, CURRENT_CITY_START, CURRENT_CITY_OK, CURRENT_CITY_ERROR,
     CITY_START, CITY_OK, CITY_ERROR } from '../constants';
-import _ from 'lodash';
 
 const defaultCities = JSON.parse(localStorage.getItem('cities')) || [];
 
-
-
 export default (cities = defaultCities, action) => {
 
-    const { type } = action;
-    // if (action.payload) {
-    //     var { type, randomId, payload: {title} } = action;
-    // }
+    const { type, payload, randomId } = action;
+
+    if (payload) {
+        var { id, name, lat, lng, weather } = payload;
+    }
 
     console.log(action);
 
 
     switch (type) {
+        case CURRENT_CITY_START:
+            return Object.assign({}, {currentCity: false});
+
         case CURRENT_CITY_OK:
-            return Object.assign({}, {currentCity: action.payload}, {citiesList: cities});
+            return Object.assign({}, {currentCity: payload}, {citiesList: cities});
+
+        case CITY_START:
+            cities.citiesList.forEach(function(item) {
+                if (item.id === id) {
+                    item.showCityWeather = true;
+                }
+            })
+            return Object.assign({}, cities);
 
         case CITY_OK:
             cities.citiesList.forEach(function(item) {
-                if (item.id === action.payload.id) {
+                if (item.id === id) {
                     item.showWeather = true;
-                    item.weather = action.payload.weather;
+                    item.weather = weather;
                 } else {
                     item.showWeather = false;
                 }
+                item.showCityWeather = false;
             })
             return Object.assign({}, cities);
 
         case ADD_CITY:
             const city = {
-                id: action.randomId,
-                name: action.payload.name,
-                lat: action.payload.lat,
-                lng: action.payload.lng
+                id: randomId,
+                name,
+                lat,
+                lng
             }
             cities.citiesList.push(city);
             return Object.assign({}, cities);
 
         case REMOVE_CITY:
             cities.citiesList = cities.citiesList.filter(function(item) {
-                return item.id !== action.payload.id;
+                return item.id !== id;
             });
             return Object.assign({}, cities);
     }
 
     return cities;
-}
+};

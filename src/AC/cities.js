@@ -28,10 +28,14 @@ export function getCityWeather(lat, lng) {
     };
 }
 
-export function addCity(title) {
+export function addCity(name, lat, lng) {
     return {
         type: ADD_CITY,
-        payload: { title }
+        payload: {
+            name,
+            lat,
+            lng
+        }
     };
 }
 

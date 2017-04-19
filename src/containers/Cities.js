@@ -17,11 +17,8 @@ class Cities extends Component {
         this.props.removeCity(id);
     }
 
-    handleAddClick = (e) => {
-        if (e.keyCode === 13 && e.ctrlKey) {
-            this.props.addCity(e.target.value);
-            this.setState({text: ''});
-        }
+    handleAddClick = (address, lat, lng) => {
+        this.props.addCity(address, lat, lng);
     }
 
     handleText = (e) => {
@@ -29,7 +26,6 @@ class Cities extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 {this.props.cities.currentCity
@@ -43,10 +39,10 @@ class Cities extends Component {
                     value={this.state.text}
                     onChange={this.handleText}
                     className='city-input'
-                    placeholder='Ctrl + enter - add city'
-                    onKeyDown={this.handleAddClick}/>
-                {this.props.cities.citiesList ? this.props.cities.citiesList.map((city, i) => {
-                    return <City city={city} key={i} removeCity ={this.handleRemoveClick} />;
+                    placeholder='Выберите город'/>
+                {this.props.cities.citiesList && this.props.cities.citiesList.length
+                    ? this.props.cities.citiesList.map((city, i) => {
+                        return <City city={city} key={i} removeCity ={this.handleRemoveClick} />;
                 }) : null}
             </div>
         );
@@ -69,15 +65,16 @@ class Cities extends Component {
                 var latitude = place.geometry.location.lat();
                 var longitude = place.geometry.location.lng();
 
-                self.props.getCityWeather(latitude, longitude);
+                self.handleAddClick(address, latitude, longitude);
+
+                // self.props.getCityWeather(latitude, longitude);
                 self.setState({text: ''});
             });
-
-        };
+        }
 
         function error() {
             console.log('error');
-        };
+        }
 
         if (navigator.geolocation && !this.state.currentCityLoaded) {
             navigator.geolocation.getCurrentPosition(success, error);
@@ -86,7 +83,6 @@ class Cities extends Component {
 }
 
 export default connect((state) => {
-    console.log(state);
     const { cities } = state;
     return { cities };
 }, {

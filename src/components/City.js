@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Weather from './../components/Weather';
+import './City.styl';
 
 class City extends Component {
     static propTypes = {
@@ -19,13 +20,15 @@ class City extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className='city-item'>
                 <div className='city-name' onClick={this.toggleCity}>{this.props.city.name}
-                    <div className='city-remove' onClick={this.handleRemoveClick}>×</div>
+                    <span className='city-remove' onClick={this.handleRemoveClick}>×</span>
                 </div>
-                {this.props.current || this.state.open ? <Weather weather ={this.props.city.weather} /> : null}
+                {this.props.city.weather && (this.props.current || this.state.open)
+                    ? <Weather weather ={this.props.city.weather} />
+                    : null
+                }
             </div>
         );
     }

@@ -33,19 +33,18 @@ export default store => next => action => {
     }
 
     if (action.type === ADD_CITY) {
-        const {randomId, payload: {title}} = action;
+        const {randomId, payload: {name, lat, lng}} = action;
         let cities = {};
         if (localStorage.getItem('cities')) {
             cities = JSON.parse(localStorage.getItem('cities'));
         }
 
         if (!cities.length) {
-            cities = [{id: randomId, title}];
+            cities = [{id: randomId, name, lat, lng}];
 
         } else {
-            cities.push({id: randomId, title});
+            cities.push({id: randomId, name, lat, lng});
         }
-        console.log(cities);
         localStorage.setItem('cities', JSON.stringify(cities));
     }
     return next(action);

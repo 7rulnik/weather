@@ -15,8 +15,6 @@ export default (cities = defaultCities, action) => {
 
     switch (type) {
         case CURRENT_CITY_OK:
-            console.log(action);
-            console.log(cities);
             return Object.assign({}, {currentCity: action.payload}, {citiesList: cities});
 
         case SELECT_CITY:
@@ -24,15 +22,21 @@ export default (cities = defaultCities, action) => {
             return _.slice(action.tasks);
 
         case ADD_CITY:
-            return cities;
-            return _.concat(tasks, [{id: randomId, value}])
+            const city = {
+                id: action.randomId,
+                name: action.payload.name,
+                lat: action.payload.lat,
+                lng: action.payload.lng
+            }
+            cities.citiesList.push(city);
+            return Object.assign({}, cities);
 
         case REMOVE_CITY:
-            return cities;
-            return action.tasks.filter(function (item) {
-                return item.id !== id
+            cities.citiesList = cities.citiesList.filter(function(item) {
+             return item.id !== action.payload.id;
             });
+            return Object.assign({}, cities);
     }
 
-    return cities
+    return cities;
 }

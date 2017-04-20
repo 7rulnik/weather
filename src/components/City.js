@@ -8,14 +8,17 @@ class City extends Component {
     }
 
     getCityWeather = (e) => {
+        const { getCityWeather, city: {lat, lng, id} } = this.props;
         if (!this.props.current && !this.state.open) {
-            this.props.getCityWeather(this.props.city.lat, this.props.city.lng, this.props.city.id);
+            getCityWeather(lat, lng, id);
         }
         this.setState({open: false });
     }
 
     handleRemoveClick = (e) => {
-        this.props.removeCity(this.props.city.id);
+        e.stopPropagation();
+        const { removeCity, city: {id} } = this.props;
+        removeCity(id);
     }
 
     componentWillReceiveProps(nextProps) {

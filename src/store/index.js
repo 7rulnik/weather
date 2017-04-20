@@ -9,6 +9,5 @@ const enhancer = compose(
 )
 
 const store = createStore(reducer, {}, enhancer);
-window.store = store;
 
 export default store;

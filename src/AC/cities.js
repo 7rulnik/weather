@@ -13,7 +13,8 @@ export function getCityWeather(lat, lng, id) {
     }
     return (dispatch, state) => {
         dispatch({
-            type: START
+            type: START,
+            payload: { id }
         })
 
         axios.get(`${API_URL}?lat=${lat}&lon=${lng}&appid=${API_KEY}`)

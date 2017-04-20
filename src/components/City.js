@@ -1,6 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Weather from './../components/Weather';
-import Loader from './../components/Loader';
 import './City.styl';
 
 class City extends Component {
@@ -12,30 +11,30 @@ class City extends Component {
         if (!this.props.current && !this.state.open) {
             this.props.getCityWeather(this.props.city.lat, this.props.city.lng, this.props.city.id);
         }
-        this.setState({open: !this.state.open });
+        this.setState({open: false });
     }
 
     handleRemoveClick = (e) => {
         this.props.removeCity(this.props.city.id);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({open: nextProps.city.showWeather });
+    }
+
     render() {
-        let isOpen;
-        if (this.props.current) {
-            isOpen = true;
-        } else if (this.props.city.showWeather && this.state.open){
-            isOpen = true;
-        } else {
-            isOpen = false;
-        }
+        const isOpen = (this.props.current || (this.props.city.showWeather && this.state.open));
+        const isLoading = !this.props.current && this.props.city.showCityLoader;
+
         return (
-            <div className='city-item'>
-                <div className='city-name' onClick={this.getCityWeather}>{this.props.city.name}
+            <div className='city-item' onClick={this.getCityWeather}>
+                <div className='city-name'><b>{this.props.city.name}</b>
                     {this.props.current ? null : <span className='city-remove' onClick={this.handleRemoveClick}>×</span>}
                 </div>
+
                 {isOpen
-                    ? <Weather weather ={this.props.city.weather} />
-                    : <Loader />
+                    ? <Weather weather={this.props.city.weather} isLoading={isLoading} />
+                    : null
                 }
             </div>
         );

@@ -11,20 +11,17 @@ export default (cities = defaultCities, action) => {
         var { id, name, lat, lng, weather } = payload;
     }
 
-    console.log(action);
-
-
     switch (type) {
         case CURRENT_CITY_START:
-            return Object.assign({}, {currentCity: false});
+            return Object.assign({}, {currentCity: false}, {citiesList: cities});
 
         case CURRENT_CITY_OK:
-            return Object.assign({}, {currentCity: payload}, {citiesList: cities});
+            return Object.assign({}, {currentCity: payload}, {citiesList: cities.citiesList});
 
         case CITY_START:
             cities.citiesList.forEach(function(item) {
                 if (item.id === id) {
-                    item.showCityWeather = true;
+                    item.showCityLoader = true;
                 }
             })
             return Object.assign({}, cities);
@@ -37,7 +34,7 @@ export default (cities = defaultCities, action) => {
                 } else {
                     item.showWeather = false;
                 }
-                item.showCityWeather = false;
+                item.showCityLoader = false;
             })
             return Object.assign({}, cities);
 
